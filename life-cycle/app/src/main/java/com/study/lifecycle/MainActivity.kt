@@ -1,5 +1,6 @@
 package com.study.lifecycle
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Log.d("checkActivity", "onCreate")
+
+        val goToOtherActivityButton = binding.goToOtherActivityButton
+        goToOtherActivityButton.setOnClickListener {
+            val intent = Intent(this, OtherActivity::class.java);
+            startActivity(intent)
+        }
     }
 
     override fun onStart() {
