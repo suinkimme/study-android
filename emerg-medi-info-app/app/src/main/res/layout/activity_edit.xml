@@ -90,15 +90,39 @@
         app:layout_constraintBottom_toBottomOf="@id/birthdateTextView"
         android:src="@drawable/baseline_edit_calendar_24" />
 
-    <TextView
-        android:id="@+id/bloodTypeEditText"
-        style="@style/Value"
+    <RadioGroup
+        android:id="@+id/bloodTypeRadioGroup"
         android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="end"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/bloodTypeTextView"
+        app:layout_constraintEnd_toStartOf="@+id/bloodTypeSpinner"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/bloodTypeTextView">
+
+        <RadioButton
+            android:id="@+id/bloodTypePlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rh+" />
+
+        <RadioButton
+            android:id="@+id/bloodTypeMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rh-" />
+
+    </RadioGroup>
+
+    <Spinner
+        android:id="@+id/bloodTypeSpinner"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:text="A"
-        app:layout_constraintBaseline_toBaselineOf="@id/bloodTypeTextView"
+        app:layout_constraintTop_toTopOf="@id/bloodTypeTextView"
+        app:layout_constraintBottom_toBottomOf="@id/bloodTypeTextView"
         app:layout_constraintEnd_toEndOf="@id/nameEditText"
-        app:layout_constraintStart_toStartOf="@id/guideline2" />
+        />
 
     <EditText
         android:id="@+id/emerContactNumberEditText"
@@ -110,13 +134,24 @@
         app:layout_constraintEnd_toEndOf="@id/nameEditText"
         app:layout_constraintStart_toStartOf="@id/guideline2" />
 
+    <CheckBox
+        android:id="@+id/otherCheckBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="end|center_vertical"
+        android:text="기타 노출"
+        app:layout_constraintBottom_toBottomOf="@+id/otherTextView"
+        app:layout_constraintEnd_toEndOf="@+id/nameEditText"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/otherTextView" />
+
     <EditText
         android:id="@+id/otherEditText"
         style="@style/Value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="주의사항"
-        app:layout_constraintBaseline_toBaselineOf="@id/otherTextView"
+        app:layout_constraintTop_toBottomOf="@id/otherCheckBox"
         app:layout_constraintEnd_toEndOf="@id/nameEditText"
         app:layout_constraintStart_toStartOf="@id/guideline2" />
 
