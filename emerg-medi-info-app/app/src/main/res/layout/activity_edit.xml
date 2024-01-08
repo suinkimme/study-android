@@ -8,11 +8,11 @@
 
     <TextView
         android:id="@+id/nameTextView"
+        style="@style/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:text="이름"
-        style="@style/Title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,29 +75,28 @@
         style="@style/Value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="1999-03-19"
+        android:paddingEnd="8dp"
+        android:text="0000-00-00"
         app:layout_constraintBaseline_toBaselineOf="@id/birthdateTextView"
         app:layout_constraintEnd_toStartOf="@+id/birthdateImageView"
-        app:layout_constraintStart_toStartOf="@id/guideline2"
-        android:paddingEnd="8dp"/>
+        app:layout_constraintStart_toStartOf="@id/guideline2" />
 
     <ImageView
         android:id="@+id/birthdateImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/nameEditText"
-        app:layout_constraintTop_toTopOf="@id/birthdateTextView"
+        android:src="@drawable/baseline_edit_calendar_24"
         app:layout_constraintBottom_toBottomOf="@id/birthdateTextView"
-        android:src="@drawable/baseline_edit_calendar_24" />
+        app:layout_constraintEnd_toEndOf="@id/nameEditText"
+        app:layout_constraintTop_toTopOf="@id/birthdateTextView" />
 
     <RadioGroup
         android:id="@+id/bloodTypeRadioGroup"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="end"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@id/bloodTypeTextView"
-        app:layout_constraintEnd_toStartOf="@+id/bloodTypeSpinner"
         app:layout_constraintStart_toStartOf="@id/guideline2"
         app:layout_constraintTop_toTopOf="@id/bloodTypeTextView">
 
@@ -117,12 +116,12 @@
 
     <Spinner
         android:id="@+id/bloodTypeSpinner"
-        android:layout_width="70dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/bloodTypeTextView"
         app:layout_constraintBottom_toBottomOf="@id/bloodTypeTextView"
         app:layout_constraintEnd_toEndOf="@id/nameEditText"
-        />
+        app:layout_constraintStart_toEndOf="@+id/bloodTypeRadioGroup"
+        app:layout_constraintTop_toTopOf="@id/bloodTypeTextView" />
 
     <EditText
         android:id="@+id/emerContactNumberEditText"
@@ -151,18 +150,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="주의사항"
-        app:layout_constraintTop_toBottomOf="@id/otherCheckBox"
         app:layout_constraintEnd_toEndOf="@id/nameEditText"
-        app:layout_constraintStart_toStartOf="@id/guideline2" />
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/otherCheckBox" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/goInputActivity"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
         android:layout_margin="36dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_edit_24" />
+        app:srcCompat="@drawable/baseline_save_24" />
+
+    <androidx.constraintlayout.helper.widget.Layer
+        android:id="@+id/birthdateLayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="birthdateImageView,birthdateValueTextView"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

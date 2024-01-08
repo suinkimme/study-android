@@ -1,5 +1,6 @@
 package study.emerg_medi_info_app
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,8 +15,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.goInputActivity.setOnClickListener {
             val intent = Intent(this, EditActivity::class.java)
-            intent.putExtra("intentMessage", "응급의료정보")
             startActivity(intent)
+        }
+    }
+
+    private fun getData() {
+        with(getSharedPreferences(USER_INFORMATION, Context.MODE_PRIVATE)) {
+            binding.nameValueTextView.text = getString(NAME, "미정")
         }
     }
 }
