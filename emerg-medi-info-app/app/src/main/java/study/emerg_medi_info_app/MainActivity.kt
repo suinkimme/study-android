@@ -2,8 +2,10 @@ package study.emerg_medi_info_app
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.view.isVisible
 import study.emerg_medi_info_app.databinding.ActivityMainBinding
 
@@ -17,6 +19,18 @@ class MainActivity : AppCompatActivity() {
         binding.goInputActivity.setOnClickListener {
             val intent = Intent(this, EditActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.deleteButton.setOnClickListener {
+            deleteData()
+        }
+
+        binding.emergencyContactLayer.setOnClickListener {
+            with(Intent(Intent.ACTION_VIEW)) {
+                val phoneNumber = binding.emerContactNumberValueTextView.text.toString().replace("-", "")
+                data = Uri.parse("tel:$phoneNumber")
+                startActivity(this) // 왜 this지? Intent 안이라 this가  먹히는듯?
+            }
         }
     }
 
@@ -39,5 +53,14 @@ class MainActivity : AppCompatActivity() {
                 binding.otherValueTextView.text = getString(OTHER, "미정")
             }
         }
+    }
+
+    private fun deleteData() {
+        with(getSharedPreferences(USER_INFORMATION, MODE_PRIVATE).edit()) {
+            clear()
+            apply()
+            getDataUiUpdate()
+        }
+        Toast.makeText(this, "초기화를 완료했습니다.", Toast.LENGTH_SHORT).show()
     }
 }
