@@ -62,9 +62,7 @@ class MainActivity : AppCompatActivity() {
         val operatorString = (view as? Button)?.text?.toString() ?: ""
 
         if (firstNumberText.isEmpty()) {
-            Toast.makeText(this, "먼저 숫자를 입력해 주세요.", Toast.LENGTH_SHORT).show()
-            return
-        }
+            Toast.makeText(this, "먼저 숫자를 입력해 주세요.", Toast.LENGTH_SHORT).show() }
 
         if (secondNumberText.isNotEmpty()) {
             Toast.makeText(this, "1개의 연산자에 대해서 만 연산이 가능합니다.", Toast.LENGTH_SHORT).show()
