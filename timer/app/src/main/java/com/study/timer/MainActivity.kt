@@ -13,6 +13,7 @@ import kotlin.concurrent.timer
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var countdownSecond = 10
+    private var currentCountdownDeciSecond = countdownSecond * 10
     private var currentDeciSecond = 0
     private var timer: Timer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,19 +48,40 @@ class MainActivity : AppCompatActivity() {
         binding.lapButton.setOnClickListener {
             lap()
         }
+
+        initCountdownViews()
+    }
+
+    private fun initCountdownViews() {
+        val seconds = currentCountdownDeciSecond / 10
+        binding.countdownTextView.text = String.format("%02d", countdownSecond)
+        binding.countdownProgressBar.progress = 100
     }
 
     private fun start() {
         timer = timer(initialDelay = 0, period = 100) {
-            currentDeciSecond += 1
+            if (currentCountdownDeciSecond == 0) {
+                currentDeciSecond += 1
 
-            val minutes = currentDeciSecond.div(10) / 60
-            val second = currentDeciSecond.div(10) % 60
-            val deciSeconds = currentDeciSecond % 10
+                val minutes = currentDeciSecond.div(10) / 60
+                val second = currentDeciSecond.div(10) % 60
+                val deciSeconds = currentDeciSecond % 10
 
-            runOnUiThread {
-                binding.timeTextView.text = String.format("%02d:%02d", minutes, second)
-                binding.tickTextView.text = deciSeconds.toString()
+                runOnUiThread {
+                    binding.timeTextView.text = String.format("%02d:%02d", minutes, second)
+                    binding.tickTextView.text = deciSeconds.toString()
+
+                    binding.countdownGroup.isVisible = false
+                }
+            } else {
+                currentCountdownDeciSecond -= 1
+                val seconds = currentCountdownDeciSecond / 10
+                val progress = (currentCountdownDeciSecond / (countdownSecond * 10f)) * 100
+
+                binding.root.post {
+                    binding.countdownTextView.text = String.format("%02d", seconds)
+                    binding.countdownProgressBar.progress = progress.toInt()
+                }
             }
         }
     }
@@ -73,6 +95,9 @@ class MainActivity : AppCompatActivity() {
         currentDeciSecond = 0
         binding.timeTextView.text = "00:00"
         binding.tickTextView.text = "0"
+
+        binding.countdownGroup.isVisible = true
+        initCountdownViews()
     }
 
     private fun pause() {
@@ -96,6 +121,7 @@ class MainActivity : AppCompatActivity() {
             setView(dialogBinding.root)
             setPositiveButton("확인") { _, _ ->
                 countdownSecond = dialogBinding.countdownSecondPicker.value
+                currentCountdownDeciSecond = countdownSecond * 10
                 binding.countdownTextView.text = String.format("%02d", countdownSecond)
             }
             setNegativeButton("취소", null)
