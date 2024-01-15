@@ -3,8 +3,11 @@ package com.study.timer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.core.view.setPadding
 import com.study.timer.databinding.ActivityMainBinding
 import com.study.timer.databinding.DialogCountdownSettingBinding
 import java.util.Timer
@@ -106,7 +109,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun lap() {
-
+        val container = binding.lapContainerLinearLayout
+        TextView(this).apply {
+            textSize = 20f
+            gravity = Gravity.CENTER
+            val minutes = currentDeciSecond.div(10) / 60
+            val seconds = currentDeciSecond.div(10) % 60
+            val deciSeconds = currentDeciSecond % 10
+            text = container.childCount.inc().toString() + " " + String.format("%02d:%02d %01d", minutes, seconds, deciSeconds)
+            setPadding(30)
+        }.let { lapTextView ->
+            container.addView(lapTextView, 0)
+        }
     }
 
     private fun showCountdownSettingDialog() {
