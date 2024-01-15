@@ -4,6 +4,7 @@ import android.media.AudioManager
 import android.media.ToneGenerator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Gravity
 import android.widget.TextView
@@ -14,17 +15,19 @@ import com.study.timer.databinding.ActivityMainBinding
 import com.study.timer.databinding.DialogCountdownSettingBinding
 import java.util.Timer
 import kotlin.concurrent.timer
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var countdownSecond = 5
     private var currentCountdownDeciSecond = countdownSecond * 10
     private var currentDeciSecond = 0
     private var timer: Timer? = null
+    private lateinit var handler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        handler = Handler()
 
         binding.countdownTextView.setOnClickListener {
             showCountdownSettingDialog()
@@ -73,12 +76,17 @@ class MainActivity : AppCompatActivity() {
                 val second = currentDeciSecond.div(10) % 60
                 val deciSeconds = currentDeciSecond % 10
 
-                runOnUiThread {
+                handler.post {
                     binding.timeTextView.text = String.format("%02d:%02d", minutes, second)
                     binding.tickTextView.text = deciSeconds.toString()
-
                     binding.countdownGroup.isVisible = false
                 }
+//                runOnUiThread {
+//                    binding.timeTextView.text = String.format("%02d:%02d", minutes, second)
+//                    binding.tickTextView.text = deciSeconds.toString()
+//
+//                    binding.countdownGroup.isVisible = false
+//                }
             } else {
                 currentCountdownDeciSecond -= 1
                 val seconds = currentCountdownDeciSecond / 10
