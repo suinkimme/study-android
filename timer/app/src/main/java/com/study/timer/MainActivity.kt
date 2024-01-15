@@ -58,14 +58,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initCountdownViews() {
-        val seconds = currentCountdownDeciSecond / 10
-        binding.countdownTextView.text = String.format("%02d", countdownSecond)
+        val seconds = countdownSecond
+        currentCountdownDeciSecond = countdownSecond * 10
+        binding.countdownTextView.text = String.format("%02d", seconds)
         binding.countdownProgressBar.progress = 100
     }
 
     private fun start() {
         timer = timer(initialDelay = 0, period = 100) {
-            if (currentCountdownDeciSecond == 0) {
+            if (currentCountdownDeciSecond < 10) {
                 currentDeciSecond += 1
 
                 val minutes = currentDeciSecond.div(10) / 60
@@ -81,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 currentCountdownDeciSecond -= 1
                 val seconds = currentCountdownDeciSecond / 10
-                val progress = (currentCountdownDeciSecond / (countdownSecond * 10f)) * 100
+                val progress = ((currentCountdownDeciSecond - 10) / ((countdownSecond - 1) * 10f)) * 100
 
                 binding.root.post {
                     binding.countdownTextView.text = String.format("%02d", seconds)
@@ -89,10 +90,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            if (currentDeciSecond == 0 && currentCountdownDeciSecond < 31 && currentCountdownDeciSecond % 10 == 0) {
-                val toneType = if (currentCountdownDeciSecond == 0) ToneGenerator.TONE_CDMA_HIGH_L else ToneGenerator.TONE_CDMA_ANSWER
+            if (currentDeciSecond == 0 && currentCountdownDeciSecond < 41 && currentCountdownDeciSecond % 10 == 0) {
+                val toneType = if (currentCountdownDeciSecond == 10) ToneGenerator.TONE_CDMA_HIGH_L else ToneGenerator.TONE_CDMA_ANSWER
                 ToneGenerator(AudioManager.STREAM_ALARM, ToneGenerator.MAX_VOLUME)
                     .startTone(toneType, 100)
+                Log.d("currentCountdownDeciSecond", currentCountdownDeciSecond.toString())
             }
         }
     }
