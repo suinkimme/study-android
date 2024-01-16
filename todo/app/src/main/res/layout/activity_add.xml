@@ -18,14 +18,17 @@
         android:gravity="center" />
 
     <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/textTextInputLayout"
-    style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/titleTextView">
+        android:id="@+id/textTextInputLayout"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:errorEnabled="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditText"
@@ -37,10 +40,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/meanTextInputLayout"
-        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        app:counterEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textTextInputLayout">
@@ -52,5 +55,21 @@
             android:hint="뜻" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/typeChipGroup"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/meanTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/typeChipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="추가"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
