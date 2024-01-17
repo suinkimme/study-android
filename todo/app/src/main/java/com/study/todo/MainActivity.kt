@@ -1,5 +1,6 @@
 package com.study.todo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -16,6 +17,11 @@ class MainActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
         setContentView(binding.root)
 
         initRecyclerView()
+        binding.addButton.setOnClickListener {
+            Intent(this, AddActivity::class.java).let {
+                startActivity(it)
+            }
+        }
     }
 
     private fun initRecyclerView() {
