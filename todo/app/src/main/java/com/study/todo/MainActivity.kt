@@ -15,6 +15,10 @@ class MainActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
         val dummyList = mutableListOf(
             Word("weather", "날씨", "명사"),
             Word("honey", "꿀", "명사"),
