@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.view.children
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.chip.Chip
 import com.study.todo.databinding.ActivityAddBinding
 
@@ -32,6 +33,16 @@ class AddActivity : AppCompatActivity() {
             }
         }
 
+        binding.textInputEditText.addTextChangedListener {
+            it?.let { text ->
+                binding.textTextInputLayout.error = when(text.length) {
+                    0 -> "값을 입력해주세요"
+                    1 -> "2자 이상을 입력해주세요"
+                    else -> null
+                }
+            }
+        }
+
         originWord = intent.getParcelableExtra("originWord")
         originWord?.let {word ->
             binding.textInputEditText.setText(word.text)
@@ -51,6 +62,16 @@ class AddActivity : AppCompatActivity() {
 
     private fun add() {
         val text = binding.textInputEditText.text.toString()
+        text.let { text ->
+            binding.textTextInputLayout.error = when(text.length) {
+                0 -> "값을 입력해주세요"
+                1 -> "2자 이상을 입력해주세요"
+                else -> null
+            }
+        }
+
+        if (text.length < 2) return
+
         val mean = binding.meanInputEditText.text.toString()
         val type = findViewById<Chip>(binding.typeChipGroup.checkedChipId).text.toString()
         val word = Word(text, mean, type)
