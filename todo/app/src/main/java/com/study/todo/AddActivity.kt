@@ -3,6 +3,7 @@ package com.study.todo
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.view.children
 import com.google.android.material.chip.Chip
@@ -35,7 +36,7 @@ class AddActivity : AppCompatActivity() {
         originWord?.let {word ->
             binding.textInputEditText.setText(word.text)
             binding.meanInputEditText.setText(word.mean)
-            val selectedChip = binding.typeChipGroup.children.firstOrNull { (it as Chip).text === word.type } as? Chip
+            val selectedChip = binding.typeChipGroup.children.firstOrNull { (it as Chip).text == word.type } as? Chip
             selectedChip?.isChecked = true
         }
     }
@@ -75,7 +76,7 @@ class AddActivity : AppCompatActivity() {
             editWord?.let { word ->
                 AppDatabase.getInstance(this)?.wordDao()?.update(word)
                 val intent = Intent().putExtra("editWord", editWord)
-                setResult(RESULT_OK)
+                setResult(RESULT_OK, intent)
                 runOnUiThread { Toast.makeText(this, "수정을 완료했습니다", Toast.LENGTH_SHORT).show() }
                 finish()
             }
