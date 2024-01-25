@@ -10,5 +10,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val list = ArrayList<Item>()
+        list.add(Item("안녕하세요"))
+        list.add(Item("감사해요"))
+        list.add(Item("잘있어요"))
+        list.add(Item("다시 만나요"))
     }
 }
