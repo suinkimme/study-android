@@ -11,6 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="문자열을 입력하세요."
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="추가"
-        app:layout_constraintStart_toEndOf="@id/stringEditText" />
+        app:layout_constraintBaseline_toBaselineOf="@id/stringEditText"
+        app:layout_constraintStart_toEndOf="@+id/stringEditText" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/line"
@@ -31,6 +34,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stringEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
