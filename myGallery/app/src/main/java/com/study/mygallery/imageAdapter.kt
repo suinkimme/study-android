@@ -1,12 +1,16 @@
 package com.study.mygallery
 
+import android.content.Context
 import android.net.Uri
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.study.mygallery.databinding.ItemImageBinding
+import com.study.mygallery.databinding.ItemLoadMoreBinding
 
-class imageAdapter: ListAdapter<ImageItems, RecyclerView.ViewHolder>(
+class ImageAdapter(private val itemClickListener: ItemClickListener): ListAdapter<ImageItems, RecyclerView.ViewHolder>(
     object : DiffUtil.ItemCallback<ImageItems>() {
         override fun areItemsTheSame(oldItem: ImageItems, newItem: ImageItems): Boolean {
             return oldItem === newItem
@@ -29,18 +33,32 @@ class imageAdapter: ListAdapter<ImageItems, RecyclerView.ViewHolder>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         return when (viewType) {
             ITEM_IMAGE -> {
-
+                val binding = ItemImageBinding.inflate(inflater, parent, false)
+                ImageViewHolder(binding)
             }
             else -> {
-
+                val binding = ItemLoadMoreBinding.inflate(inflater, parent, false)
+                LoadMoreViewHolder(binding)
             }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        when (holder) {
+            is ImageViewHolder -> {
+                holder.bind(currentList[position] as ImageItems.Image)
+            }
+            is LoadMoreViewHolder -> {
+                holder.bind(itemClickListener)
+            }
+        }
+    }
+
+    interface ItemClickListener {
+        fun onLoadMoreClick()
     }
 
     companion object {
@@ -57,6 +75,14 @@ sealed class ImageItems {
     object LoadMore: ImageItems()
 }
 
-class ImageViewHolder(): RecyclerView.ViewHolder() {
+class ImageViewHolder(private val binding: ItemImageBinding): RecyclerView.ViewHolder(binding.root) {
+    fun bind(item: ImageItems.Image) {
+        binding.previewImageView.setImageURI(item.uri)
+    }
+}
 
+class LoadMoreViewHolder(binding: ItemLoadMoreBinding): RecyclerView.ViewHolder(binding.root) {
+    fun bind(itemClickListener: ImageAdapter.ItemClickListener) {
+        itemView.setOnClickListener { itemClickListener.onLoadMoreClick() }
+    }
 }
